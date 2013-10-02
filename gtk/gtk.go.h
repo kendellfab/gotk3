@@ -200,6 +200,18 @@ toGtkOrientable(void *p)
 	return (GTK_ORIENTABLE(p));
 }
 
+static GtkTextBuffer *
+toGtkTextBuffer(void *p)
+{
+	return (GTK_TEXT_BUFFER(p));
+}
+
+static GtkTextView *
+toGtkTextView(void *p)
+{
+	return (GTK_TEXT_VIEW(p));
+}
+
 static GtkTreeView *
 toGtkTreeView(void *p)
 {

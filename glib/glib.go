@@ -311,6 +311,10 @@ func (v *Object) Native() *C.GObject {
 	return C.toGObject(p)
 }
 
+func ObjectNew(p *C.GObject) *Object {
+	return &Object{p}
+}
+
 func (v *Object) toGObject() *C.GObject {
 	if v == nil {
 		return nil
