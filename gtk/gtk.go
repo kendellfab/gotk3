@@ -637,7 +637,15 @@ func wrapSwitch(obj *glib.Object) *Switch {
 }
 
 func SwitchNew() (*Switch, error) {
-	return nil, nil
+	c := C.gtk_switch_new()
+	if c == nil {
+		return nil, nilPtrErr
+	}
+	obj := &glib.Object{glib.ToGObject(unsafe.Pointer(c))}
+	s := wrapSwitch(obj)
+	obj.RefSink()
+	runtime.SetFinalizer(obj, (*glib.Object).Unref)
+	return s, nil
 }
 
 func (s *Switch) GetActive() bool {
