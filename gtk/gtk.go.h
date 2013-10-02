@@ -122,6 +122,12 @@ toGtkButton(void *p)
 	return (GTK_BUTTON(p));
 }
 
+static GtkSwitch *
+toGtkSwitch(void *p)
+{
+	return (GTK_SWITCH(p));
+}
+
 static GtkScrolledWindow *
 toGtkScrolledWindow(void *p)
 {

@@ -617,6 +617,39 @@ func (b *Builder) GetObject(name string) (glib.IObject, error) {
 }
 
 /*
+ * GtkSwitch
+ */
+// Swtich is a represenation of GTK's GtkSwitch
+type Switch struct {
+	Bin
+}
+
+func (v *Switch) Native() *C.GtkSwitch {
+	if v == nil || v.GObject == nil {
+		return nil
+	}
+	p := unsafe.Pointer(v.GObject)
+	return C.toGtkSwitch(p)
+}
+
+func wrapSwitch(obj *glib.Object) *Switch {
+	return &Switch{Bin{Container{Widget{glib.InitiallyUnowned{obj}}}}}
+}
+
+func SwitchNew() (*Switch, error) {
+	return nil, nil
+}
+
+func (s *Switch) GetActive() bool {
+	gBool := C.gtk_switch_get_active(s.Native())
+	return gobool(gBool)
+}
+
+func (s *Switch) SetActive(active bool) {
+	C.gtk_switch_set_active(s.Native(), gbool(active))
+}
+
+/*
  * GtkButton
  */
 
@@ -4466,6 +4499,8 @@ func cast(c *C.GObject) (glib.IObject, error) {
 		g = wrapWindow(obj)
 	case "GtkTextView":
 		g = wrapTextView(obj)
+	case "GtkSwitch":
+		g = wrapSwitch(obj)
 	default:
 		return nil, errors.New("unrecognized class name '" + className + "'")
 	}
